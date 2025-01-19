@@ -1,101 +1,94 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
+import BarChart from '@/components/BarChart';
+import CircularProgress from '@/components/CircularProgress';
+
+// Generate random value between min and max
+const getRandomValue = (min: number, max: number) => 
+  Math.floor(Math.random() * (max - min + 1)) + min;
+
+const monthlyData = [
+  { month: 'Jan', value: getRandomValue(40, 90) },
+  { month: 'Feb', value: getRandomValue(45, 95) },
+  { month: 'Mar', value: getRandomValue(35, 85) },
+  { month: 'Apr', value: getRandomValue(50, 95) },
+  { month: 'May', value: getRandomValue(30, 80) },
+  { month: 'Jun', value: getRandomValue(40, 90) },
+  { month: 'Jul', value: getRandomValue(35, 85) },
+  { month: 'Aug', value: getRandomValue(30, 80) },
+  { month: 'Sep', value: getRandomValue(40, 90) },
+  { month: 'Oct', value: getRandomValue(45, 95) },
+  { month: 'Nov', value: getRandomValue(50, 95) },
+  { month: 'Dec', value: getRandomValue(40, 90) },
+];
+
+export default function Dashboard() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="p-8">
+      <header className="flex justify-between items-center mb-8">
+        <h1 className="text-2xl font-semibold">Welcome back, Olivia</h1>
+        <div className="flex gap-4">
+          <button className="flex items-center px-4 py-2 text-sm border rounded-lg hover:bg-gray-50">
+            <span className="mr-2">Customize</span>
+          </button>
+          <button className="flex items-center px-4 py-2 text-sm border rounded-lg hover:bg-gray-50">
+            <span className="mr-2">Export</span>
+          </button>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </header>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Vendor Breakdown Chart */}
+        <div className="lg:col-span-2 bg-white rounded-xl p-6 shadow-sm">
+          <div className="flex justify-between items-start mb-4">
+            <div>
+              <h2 className="text-lg font-semibold mb-1">Vendor breakdown</h2>
+              <p className="text-sm text-gray-600">Keep track of vendors and their security ratings.</p>
+            </div>
+            <button className="text-gray-400 hover:text-gray-600">
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+              </svg>
+            </button>
+          </div>
+          
+          <div className="h-[300px]">
+            <BarChart data={monthlyData} />
+          </div>
+          
+          <div className="flex justify-end mt-4">
+            <button className="text-sm text-gray-600 hover:text-gray-800">
+              View full report
+            </button>
+          </div>
+        </div>
+
+        {/* Vendors Monitored Card */}
+        <div className="bg-white rounded-xl p-6 shadow-sm">
+          <div className="flex justify-between items-start mb-6">
+            <h2 className="text-lg font-semibold">Vendors monitored</h2>
+            <button className="text-gray-400 hover:text-gray-600">
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+              </svg>
+            </button>
+          </div>
+
+          <div className="flex flex-col items-center">
+            <div className="relative w-48 h-48 mb-4">
+              <CircularProgress percentage={80} />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="text-4xl font-semibold">240</span>
+              </div>
+            </div>
+            <p className="text-sm text-gray-600 text-center mb-2">You&apos;re using 80% of available spots.</p>
+            <p className="text-sm text-gray-600 text-center mb-6">Upgrade plan to monitor more vendors.</p>
+            <button className="w-full py-2 px-4 bg-white border border-gray-200 rounded-lg text-sm font-medium hover:bg-gray-50">
+              Upgrade plan
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
