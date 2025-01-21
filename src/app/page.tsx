@@ -2,6 +2,7 @@
 
 import BarChart from '@/components/BarChart';
 import CircularProgress from '@/components/CircularProgress';
+import NeoLineChart from '@/components/NeoLineChart';
 
 // Generate random value between min and max
 const getRandomValue = (min: number, max: number) => 
@@ -36,6 +37,16 @@ export default function Dashboard() {
           </button>
         </div>
       </header>
+
+      {/* NEO Chart - Full Width */}
+      <div className="mb-6">
+        <div className="bg-white rounded-xl p-6 shadow-sm">
+          <h2 className="text-lg font-semibold mb-4">Near Earth Objects (NEOs)</h2>
+          <div className="h-[400px]">
+            <NeoLineChart apiKey={process.env.NEXT_PUBLIC_NASA_API_KEY || 'DEMO_KEY'} />
+          </div>
+        </div>
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Vendor Breakdown Chart */}
